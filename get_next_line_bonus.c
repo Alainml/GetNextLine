@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 10:46:42 by almirand          #+#    #+#             */
-/*   Updated: 2022/04/28 17:39:47 by almirand         ###   ########.fr       */
+/*   Updated: 2022/05/10 13:19:05 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 #include <stdio.h>
 #include <limits.h>
 
+/*
+ * Updates the content of the static from /n to /0
+ *
+ * @param {static} Static variable to update
+ * @param {line_size} Size of the line to return
+ *
+ * @return {new_static} Returns the new static
+ */
 static char	*ft_update_static(char	*read_status, int line_size)
 {
 	char	*new_status;
@@ -35,6 +43,13 @@ static char	*ft_update_static(char	*read_status, int line_size)
 	return (new_status);
 }
 
+/*
+ * Returns the read line
+ *
+ * @param {static} Static string to get the line from
+ *
+ * @return{line} content from static until /n
+ */
 static char	*ft_return_line(char	*read_buffer_fd)
 {
 	char	*line;
@@ -57,6 +72,14 @@ static char	*ft_return_line(char	*read_buffer_fd)
 	return (line);
 }
 
+/*
+ * Reads buffer and updates static until a new line is found
+ *
+ * @param {static} Static to update
+ * @param {fd} Fd of the file
+ *
+ * @return {static} Updated static
+ */
 static char	*ft_read_buffer(char	*read_buffer, int fd)
 {
 	int		n_bytes;
@@ -75,6 +98,13 @@ static char	*ft_read_buffer(char	*read_buffer, int fd)
 	return (read_buffer);
 }
 
+/*
+ * Returns the next line until the \n
+ *
+ * @param {fd} Fd from the given file
+ *
+ * @return {line} Read line
+ */
 char	*get_next_line(int fd)
 {
 	static char	*read_buffer[OPEN_MAX];
@@ -95,29 +125,3 @@ char	*get_next_line(int fd)
 	read_buffer[fd] = ft_update_static(read_buffer[fd], ft_strlen(line));
 	return (line);
 }
-
-/* int main(void)
-{
-	char *name = "file1.txt";
-	int fd = open(name, O_RDONLY);
-	char	*line;
-	int		i;
-
-	i = 1;
-	while (i++ <= 2)
-	{
-		line = get_next_line(fd);
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-	i = 1;
-	fd = open(name, O_RDONLY);
-	while (i++ <= 6)
-	{
-		line = get_next_line(fd);
-		printf("%s", line);
-		free(line);
-	}
-	close(fd);
-} */

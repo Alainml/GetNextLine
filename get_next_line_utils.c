@@ -6,12 +6,20 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 17:35:30 by almirand          #+#    #+#             */
-/*   Updated: 2022/04/27 18:11:59 by almirand         ###   ########.fr       */
+/*   Updated: 2022/05/10 13:22:48 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+/*
+ * Finds the position of the given char in a string
+ *
+ * @param {s} String to search at
+ * @param {c} Char to search for
+ *
+ * @return {i} Position of the found char
+ */
 int	ft_strchr(char *s, int c)
 {
 	int				index;
@@ -56,6 +64,14 @@ size_t	ft_strlcpy(char	*dst, char	*src, size_t dstsize)
 	return (i);
 }
 
+/*
+ * Concatenates two strings
+ *
+ * @param{s1} First string
+ * @param{s2} Second string
+ *
+ * @return{join} Concatenated strings
+ */
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char		*str;
@@ -83,6 +99,13 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
+/*
+ * Allocates and copies a string
+ *
+ * @param {s1} String to copy
+ *
+ * @return {str} New allocated string
+ */
 char	*ft_strdup(char *s1)
 {
 	char	*str;
