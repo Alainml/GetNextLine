@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/22 10:46:42 by almirand          #+#    #+#             */
-/*   Updated: 2022/04/28 15:56:50 by almirand         ###   ########.fr       */
+/*   Updated: 2022/04/28 17:39:47 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdio.h>
 #include <limits.h>
 
@@ -67,7 +67,7 @@ static char	*ft_read_buffer(char	*read_buffer, int fd)
 		n_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (n_bytes == 0)
 			break ;
-		else if (n_bytes < 0)
+		else if (n_bytes == -1)
 			return (NULL);
 		buffer[n_bytes] = '\0';
 		read_buffer = ft_strjoin(read_buffer, buffer);
@@ -77,28 +77,28 @@ static char	*ft_read_buffer(char	*read_buffer, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*read_buffer;
+	static char	*read_buffer[OPEN_MAX];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
 		return (NULL);
-	if (!read_buffer)
-		read_buffer = ft_strdup("");
-	read_buffer = ft_read_buffer(read_buffer, fd);
-	if (!read_buffer || !read_buffer[0])
+	if (!read_buffer[fd])
+		read_buffer[fd] = ft_strdup("");
+	read_buffer[fd] = ft_read_buffer(read_buffer[fd], fd);
+	if (!read_buffer[fd] || !read_buffer[fd][0])
 	{
-		free(read_buffer);
-		read_buffer = NULL;
+		free(read_buffer[fd]);
+		read_buffer[fd] = NULL;
 		return (NULL);
 	}
-	line = ft_return_line(read_buffer);
-	read_buffer = ft_update_static(read_buffer, ft_strlen(line));
+	line = ft_return_line(read_buffer[fd]);
+	read_buffer[fd] = ft_update_static(read_buffer[fd], ft_strlen(line));
 	return (line);
 }
 
 /* int main(void)
 {
-	char *name = "file1";
+	char *name = "file1.txt";
 	int fd = open(name, O_RDONLY);
 	char	*line;
 	int		i;
